@@ -1,0 +1,60 @@
+{
+  "name": "Characteristic",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "decs",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "uniqued",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "valueType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "minCardinality",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "maxCardinality",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "extensible",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "characteristicValue",
+      "otherEntityRelationshipName": "characteristic",
+      "relationshipName": "values"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "specification",
+      "otherEntityRelationshipName": "characteristices",
+      "relationshipName": "specification",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200827015317",
+  "entityTableName": "characteristic",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["productService"]
+}

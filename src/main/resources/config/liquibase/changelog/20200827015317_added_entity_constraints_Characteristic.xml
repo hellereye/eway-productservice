@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Characteristic.
+    -->
+    <changeSet id="20200827015317-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="specification_id"
+                                 baseTableName="characteristic"
+                                 constraintName="fk_characteristic_specification_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="specification"/>
+
+    </changeSet>
+</databaseChangeLog>

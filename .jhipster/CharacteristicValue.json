@@ -1,0 +1,45 @@
+{
+  "name": "CharacteristicValue",
+  "fields": [
+    {
+      "fieldName": "defaultValue",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "values",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valueForm",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valueTo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rangeInterval",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "characteristic",
+      "otherEntityRelationshipName": "values",
+      "relationshipName": "characteristic",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200827015417",
+  "entityTableName": "characteristic_value",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["productService"]
+}
