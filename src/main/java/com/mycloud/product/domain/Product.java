@@ -20,6 +20,8 @@ import com.mycloud.product.domain.enumeration.ProductStatus;
 @Entity
 @Table(name = "product")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@SQLDelete(sql = "update demo set deleted = 1 where id = ?")
+//@Where(clause = "deleted = 0")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

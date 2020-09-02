@@ -2,12 +2,13 @@ package com.mycloud.product.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.mycloud.product.domain.Category} entity.
  */
 public class CategoryDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -17,7 +18,17 @@ public class CategoryDTO implements Serializable {
 
 
     private Long parentId;
-    
+
+    private Set<CategoryDTO> children;
+
+    public Set<CategoryDTO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<CategoryDTO> children) {
+        this.children = children;
+    }
+
     public Long getId() {
         return id;
     }

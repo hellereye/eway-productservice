@@ -3,6 +3,9 @@ package com.mycloud.product.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -16,8 +19,16 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "category")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category implements Serializable {
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@NamedEntityGraph(name = "Category.findByParent",
+                attributeNodes = {@NamedAttributeNode(value = "children", subgraph = "son")}, //第一层
+        subgraphs = {@NamedSubgraph(name = "son", attributeNodes = @NamedAttributeNode(value = "children", subgraph = "grandson")), //第二层
+                @NamedSubgraph(name = "grandson", attributeNodes = @NamedAttributeNode(value = "children"))//第三层
+        })
+@NamedEntityGraph(name = "category.children", attributeNodes = @NamedAttributeNode("children"))
+
+@EntityListeners(value = AuditingEntityListener.class)
+public class Category extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,14 +44,15 @@ public class Category implements Serializable {
     private String description;
 
     @OneToMany(mappedBy = "category")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Product> products = new HashSet<>();
 
-    @OneToMany(mappedBy = "parent")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OrderColumn
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL, fetch=FetchType.EAGER ,orphanRemoval=true)
+    //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Category> children = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne()
     @JsonIgnoreProperties(value = "children", allowSetters = true)
     private Category parent;
 

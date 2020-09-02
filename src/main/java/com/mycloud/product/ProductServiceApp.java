@@ -2,12 +2,16 @@ package com.mycloud.product;
 
 import com.mycloud.product.config.ApplicationProperties;
 
+import com.mycloud.product.domain.Category;
+import com.mycloud.product.repository.CategoryRepository;
 import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -17,13 +21,18 @@ import org.springframework.core.env.Environment;
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class ProductServiceApp {
+public class ProductServiceApp implements CommandLineRunner {
 
+    @Autowired
+    CategoryRepository categoryRepository;
     private static final Logger log = LoggerFactory.getLogger(ProductServiceApp.class);
 
     private final Environment env;
@@ -101,5 +110,21 @@ public class ProductServiceApp {
         }
         log.info("\n----------------------------------------------------------\n\t" +
                 "Config Server: \t{}\n----------------------------------------------------------", configServerStatus);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        List<Category> categories=categoryRepository.findAll();
+        categories.forEach(category -> {
+            System.out.println("============="+category.getName());
+        });
+
+        Optional<Category> category = categoryRepository.findById(1L);
+        category.ifPresent(category1 -> {
+
+            category1.setName("fanfree"+ LocalDate.now());
+            categoryRepository.save(category1);
+        });
+
     }
 }

@@ -4,6 +4,7 @@ import com.mycloud.product.service.dto.CategoryDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.util.Optional;
 

@@ -58,6 +58,8 @@ public class CategoryServiceImpl implements CategoryService {
             .map(categoryMapper::toDto);
     }
 
+
+
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Category : {}", id);
